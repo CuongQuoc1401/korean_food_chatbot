@@ -13,7 +13,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-ALLOWED_HOSTS = []
 
 
 # Quick-start development settings - unsuitable for production
@@ -25,7 +24,8 @@ SECRET_KEY = '(sg7s0#4%z6-yajb8fdyq@$tsu@ise2!^v4bob5#9efz!7*52z'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['korean-food-chatbot.onrender.com']
 
 
 # Application definition
