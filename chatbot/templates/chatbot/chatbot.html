@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chatbot Ẩm Thực Hàn Quốc</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f0f2f5; /* Màu nền xám nhạt */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .chatbot-container {
+            width: 450px; /* Tăng chiều rộng */
+            height: 500px; /* Tăng chiều cao */
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chatbot-header {
+            background-color: #ff9800; /* Màu cam chủ đạo như trong ảnh */
+            color: #fff;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+            flex-shrink: 0; /* Không cho header co lại */
+        }
+
+        .chatbot-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .chatbot-close-button {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.5em;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .chatbot-body {
+            padding: 15px;
+            overflow-y: auto; /* Cho phép cuộn khi tin nhắn nhiều */
+            flex-grow: 1; /* Cho phép body giãn ra để chứa tin nhắn */
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; /* Bắt đầu tin nhắn từ trên xuống */
+        }
+
+        .bot-avatar-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .bot-avatar {
+            width: 60px; /* Giảm kích thước avatar một chút nếu cần */
+            height: 60px;
+            border-radius: 50%;
+            background-color: #f0f0f0; /* Màu nền avatar */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            margin-bottom: 10px; /* Thêm khoảng cách dưới avatar */
+        }
+
+        .bot-avatar img {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 50%;
+        }
+
+        .bot-greeting {
+            background-color: #e0f7fa; /* Màu nền nhạt cho lời chào */
+            color: #00897b; /* Màu chữ xanh lá đậm cho lời chào */
+            padding: 10px 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            align-self: flex-start;
+            word-break: break-word;
+            max-width: 80%; /* Tránh tin nhắn quá dài làm lệch khung */
+        }
+
+        .user-message {
+            background-color: #e3f2fd; /* Màu nền nhạt cho tin nhắn người dùng */
+            color: #1e88e5; /* Màu chữ xanh dương đậm cho tin nhắn người dùng */
+            padding: 10px 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            align-self: flex-end;
+            word-break: break-word;
+            max-width: 80%; /* Tránh tin nhắn quá dài làm lệch khung */
+        }
+
+        .chatbot-input-area {
+            padding: 10px 15px;
+            border-top: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            flex-shrink: 0; /* Không cho input area co lại */
+        }
+
+        .chatbot-input {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 25px;
+            margin-right: 10px;
+            outline: none;
+        }
+
+        .chatbot-send-button {
+            background: none;
+            border: none;
+            color: #ff9800; /* Màu cam cho nút gửi */
+            font-size: 1.5em;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .loading-container {
+            display: flex;
+            align-items: center;
+            align-self: flex-start; /* Hiển thị biểu tượng chờ từ phía bot */
+            margin-bottom: 10px;
+        }
+
+        .loading {
+            border: 4px solid #f3f3f3; /* Light grey */
+            border-top: 4px solid #3498db; /* Blue */
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 2s linear infinite;
+            margin-right: 5px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="chatbot-container">
+        <div class="chatbot-header">
+            <h2 class="chatbot-title">Chatbot Ẩm Thực Hàn Quốc</h2>
+            <button class="chatbot-close-button">&times;</button>
+        </div>
+        <div class="chatbot-body">
+            <div class="bot-avatar-container">
+                <div class="bot-avatar">
+                    <img src="https://via.placeholder.com/60/f0f0f0/333?Text=Avatar" alt="Avatar">
+                </div>
+            </div>
+            <div class="bot-greeting">
+                Chào bạn! Hãy bắt đầu trò chuyện về ẩm thực Hàn Quốc!
+            </div>
+        </div>
+        <div class="chatbot-input-area">
+            <input type="text" class="chatbot-input" placeholder="Nhập tin nhắn...">
+            <button class="chatbot-send-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatBody = document.querySelector('.chatbot-body');
+            const chatInput = document.querySelector('.chatbot-input');
+            const sendButton = document.querySelector('.chatbot-send-button');
+            const closeButton = document.querySelector('.chatbot-close-button');
+            const botAvatarContainer = document.querySelector('.bot-avatar');
+            const botAvatarImg = document.createElement('img');
+            botAvatarImg.src = "https://via.placeholder.com/60/f0f0f0/333?Text=Avatar"; // Thay thế bằng URL avatar thật của bạn
+            botAvatarImg.alt = "Avatar";
+            botAvatarContainer.appendChild(botAvatarImg);
+
+            sendButton.addEventListener('click', sendMessageWithLocation);
+            chatInput.addEventListener('keypress', function(event) {
+                if (event.key === 'Enter') {
+                    sendMessageWithLocation();
+                }
+            });
+
+            closeButton.addEventListener('click', function() {
+                document.querySelector('.chatbot-container').style.display = 'none'; // Ẩn chatbot
+            });
+
+            function getCookie(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        let cookie = cookies[i].trim();
+                        if (cookie.startsWith(name + '=')) {
+                            cookieValue = cookie.substring(name.length + 1);
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+
+            function appendMessage(sender, text) {
+                const messageDiv = document.createElement('div');
+                messageDiv.classList.add(sender === 'user' ? 'user-message' : 'bot-greeting');
+                messageDiv.innerHTML = text; // Sử dụng innerHTML để hiển thị markdown
+                chatBody.appendChild(messageDiv);
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }
+
+            function appendLoading() {
+                const loadingContainer = document.createElement('div');
+                loadingContainer.classList.add('bot-message', 'loading-container');
+                loadingContainer.innerHTML = '<div class="loading"></div>';
+                chatBody.appendChild(loadingContainer);
+                chatBody.scrollTop = chatBody.scrollHeight;
+                return loadingContainer;
+            }
+
+            function removeLoading(loadingElement) {
+                if (loadingElement) {
+                    loadingElement.remove();
+                }
+            }
+
+            function getLocation() {
+                return new Promise((resolve, reject) => {
+                    if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(
+                            position => {
+                                resolve({ latitude: position.coords.latitude, longitude: position.coords.longitude });
+                            },
+                            error => {
+                                reject(error.message);
+                            }
+                        );
+                    } else {
+                        reject("Trình duyệt của bạn không hỗ trợ định vị.");
+                    }
+                });
+            }
+
+            async function sendMessageWithLocation() {
+                const message = chatInput.value.trim();
+                if (message) {
+                    appendMessage('user', message);
+                    chatInput.value = '';
+                    const loadingElement = appendLoading();
+                    let location = null;
+                    if (message.toLowerCase().includes("nhà hàng gần đây")) {
+                        try {
+                            location = await getLocation();
+                        } catch (error) {
+                            removeLoading(loadingElement);
+                            appendMessage('bot', `Rất tiếc, không thể lấy vị trí của bạn: ${error}. Vui lòng cho biết khu vực bạn quan tâm.`);
+                            sendMessage(message, null); // Vẫn gửi tin nhắn đi mà không có vị trí
+                            return;
+                        }
+                    }
+                    sendMessage(message, location, loadingElement);
+                }
+            }
+
+            function sendMessage(message, location, loadingElement) {
+                const formData = new FormData();
+                formData.append('user_input', message);
+                if (location) {
+                    formData.append('latitude', location.latitude);
+                    formData.append('longitude', location.longitude);
+                }
+                formData.append('csrfmiddlewaretoken', getCookie('csrftoken'));
+
+                fetch('/chatbot/get_response/', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    removeLoading(loadingElement);
+                    appendMessage('bot', data.response);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    removeLoading(loadingElement);
+                    appendMessage('bot', 'Có lỗi xảy ra khi giao tiếp với chatbot.');
+                });
+            }
+        });
+    </script>
+</body>
+</html>
