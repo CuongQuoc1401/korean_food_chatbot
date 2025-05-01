@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chào mừng đến với Chatbot Ẩm Thực Hàn Quốc</title>
+    <style>
+        body {
+            background-image: url('your-korean-food-background.jpg'); /* Thay thế bằng URL hình nền ẩm thực Hàn Quốc của bạn */
+            background-size: cover;
+            background-position: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .button-container {
+            text-align: center;
+        }
+
+        .chatbot-button {
+            background-color: #ff9800; /* Màu cam chủ đạo */
+            color: #fff;
+            font-size: 1.2em;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease;
+        }
+
+        .chatbot-button:hover {
+            background-color: #f57c00; /* Màu cam đậm hơn khi hover */
+        }
+
+        .chatbot-button:focus {
+            outline: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 0 0 3px #e65100; /* Thêm hiệu ứng focus */
+        }
+    </style>
+</head>
+<body>
+    <div class="button-container">
+        <button class="chatbot-button" onclick="window.location.href='/chatbot/'">
+            Khám phá Ẩm Thực Hàn Quốc ngay!
+        </button>
+    </div>
+
+    <script>
+        // Bạn có thể thêm JavaScript để tạo hiệu ứng đẹp hơn cho nút bấm nếu muốn
+        const button = document.querySelector('.chatbot-button');
+
+        button.addEventListener('mouseenter', () => {
+            button.style.transform = 'scale(1.05)';
+            button.style.boxShadow = '0 6px 12px rgba(0, 0, 0, 0.3)';
+        });
+
+        button.addEventListener('mouseleave', () => {
+            button.style.transform = 'scale(1)';
+            button.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
+        });
+    </script>
+</body>
+</html>

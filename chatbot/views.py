@@ -28,6 +28,9 @@ else:
 def chatbot_view(request):
     return render(request, 'chatbot/chatbot.html')
 
+def home_view(request):
+    return render(request, 'chatbot/home.html')
+
 def get_chatbot_response(request):
     if request.method == 'POST':
         user_input = request.POST.get('user_input', '')
