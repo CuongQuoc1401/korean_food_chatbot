@@ -287,7 +287,9 @@
                     formData.append('latitude', location.latitude);
                     formData.append('longitude', location.longitude);
                 }
-                formData.append('csrfmiddlewaretoken', getCookie('csrftoken'));
+                const csrfToken = getCookie('csrftoken');
+                console.log('CSRF Token trước khi gửi:', csrfToken); // Thêm dòng này
+                formData.append('csrfmiddlewaretoken', csrfToken);
 
                 fetch('/chatbot/get_response/', {
                     method: 'POST',
