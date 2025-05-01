@@ -1,0 +1,1 @@
+web: gunicorn korean_food_chatbot.wsgi
