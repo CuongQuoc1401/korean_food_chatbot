@@ -181,6 +181,10 @@
         </div>
     </div>
 
+    <form id="csrf-form" style="display: none;">
+        {% csrf_token %}
+    </form>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const chatBody = document.querySelector('.chatbot-body');
@@ -272,7 +276,7 @@
                         } catch (error) {
                             removeLoading(loadingElement);
                             appendMessage('bot', `Rất tiếc, không thể lấy vị trí của bạn: ${error}. Vui lòng cho biết khu vực bạn quan tâm.`);
-                            sendMessage(message, null); // Vẫn gửi tin nhắn đi mà không có vị trí
+                            sendMessage(message, null, null); // Vẫn gửi tin nhắn đi mà không có vị trí
                             return;
                         }
                     }
